@@ -1,7 +1,10 @@
+import GetCard from "./components/GetCard";
+
 export default function Home() {
+  
   return (
     <div>
-      Hello NextJS!
+      <GetCard />
     </div>
   );
 };
