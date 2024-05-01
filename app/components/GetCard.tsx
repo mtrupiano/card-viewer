@@ -7,7 +7,7 @@ import axios from "axios";
 export default function GetCard() {
 
   const [searchText, setSearchText] = useState("");
-  const [cardData, setCardData] = useState("");
+  const [cardData, setCardData] = useState(null);
 
   const handleClick = (event: HTMLFormElement) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ export default function GetCard() {
         },
       },
     ).then((response) => {
-      setCardData(JSON.stringify(response.data?.cards, undefined, 2))
+      setCardData(response.data?.cards)
     }).catch((error) => {
       console.log(error);
     });
@@ -41,8 +41,11 @@ export default function GetCard() {
           </Button>
         </Stack>
       </form>
+      {cardData && (
+        <img src={cardData[0].imageUrl} />
+      )}
       <pre>
-        {cardData}
+        {JSON.stringify(cardData, undefined, 2)}
       </pre>
     </>
   );
