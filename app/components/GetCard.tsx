@@ -1,13 +1,18 @@
 "use client"
 
 import { useState } from "react";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Grid, Stack, TextField } from "@mui/material";
 import axios from "axios";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import Card from "./3DCard";
+import getCardFaceImageURIs from "../utilities/getCardFaces";
+import { ScryfallCard } from "@scryfall/api-types";
 
 export default function GetCard() {
 
   const [searchText, setSearchText] = useState("");
-  const [cardData, setCardData] = useState(null);
+  const [cardData, setCardData] = useState<ScryfallCard.Any[]>(null);
 
   const handleClick = (event: HTMLFormElement) => {
     event.preventDefault();
@@ -15,38 +20,53 @@ export default function GetCard() {
       "/api/get-card",
       {
         params: {
-          query: searchText.trim(),
+          q: searchText.trim(),
         },
       },
     ).then((response) => {
-      setCardData(response.data?.cards)
+      console.log(response.data)
+      setCardData(response.data)
     }).catch((error) => {
       console.log(error);
     });
   };
 
+  const [
+    frontFaceURI,
+    backFaceURI,
+  ] = cardData ? getCardFaceImageURIs(cardData[0]) : [null, null];
+
   return (
-    <>
-      <form>
-        <Stack direction="row">
-          <TextField 
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
-          />
-          <Button 
-            onClick={handleClick}
-            type="submit"
-          >
-            GET
-          </Button>
-        </Stack>
-      </form>
-      {cardData && (
-        <img src={cardData[0].imageUrl} />
+    <Grid container spacing={2}>
+      <Grid item>
+        <form>
+          <Stack direction="row">
+            <TextField 
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+            />
+            <Button 
+              onClick={handleClick}
+              type="submit"
+            >
+              GET
+            </Button>
+          </Stack>
+        </form>
+      </Grid>
+
+      {cardData?.[0] && (
+        <Grid item>
+          <Canvas>
+            <Card
+              frontFaceURI={frontFaceURI}
+              backFaceURI={backFaceURI}
+            />
+            <OrbitControls />
+          </Canvas>
+        </Grid>
       )}
-      <pre>
-        {JSON.stringify(cardData, undefined, 2)}
-      </pre>
-    </>
+      
+    </Grid>
   );
 }
