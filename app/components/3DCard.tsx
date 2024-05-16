@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useTexture } from "@react-three/drei";
-import { FrontSide, Mesh, BackSide, DoubleSide } from "three";
+import { FrontSide, Mesh } from "three";
 
 interface CardProps {
   frontFaceURI: string,
