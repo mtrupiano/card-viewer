@@ -5,15 +5,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 export async function GET(req: NextApiRequest) {
 
   const { searchParams } = new URL(req.url);
-  const cardQuery = searchParams.get("query");
 
   try {
 
     const res = await axios.get(
-      "https://api.magicthegathering.io/v1/cards",
+      "https://api.scryfall.com/cards/search",
       {
         params: {
-          name: cardQuery,
+          q: searchParams.get("q"),
+          unique: "prints",
+          order: "set",
         },
       },
     );
