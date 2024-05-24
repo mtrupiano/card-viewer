@@ -14,6 +14,7 @@ export async function GET(req: NextApiRequest) {
         params: {
           q: searchParams.get("q"),
           unique: "prints",
+          order: "set",
         },
       },
     );
