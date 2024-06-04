@@ -17,6 +17,7 @@ export default function CardSearchAndSelectionPane({
 }) {
   const [searchText, setSearchText] = useState("");
   const [cardList, setCardList] = useState<ScryfallCard.Any[]>();
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,7 +30,16 @@ export default function CardSearchAndSelectionPane({
     }
   }, []);
 
+  useEffect(() => {
+    if (cardList && cardList.length > 0) {
+      handleSelectCard(0);
+    }
+  }, [ cardList ]);
+
   const handleSearch = (s: string) => {
+    if (loading) return;
+    setLoading(true);
+
     axios.get(
       "/api/get-card",
       {
@@ -42,8 +52,10 @@ export default function CardSearchAndSelectionPane({
       params.set("q", s.trim())
       router.push("?" + params.toString());
       setCardList(response.data?.data);
+      setLoading(false);
     }).catch((error) => {
       console.log(error);
+      setLoading(false);
     });
   };
 
@@ -59,14 +71,16 @@ export default function CardSearchAndSelectionPane({
   return (
     <>
       <form>
-        <Stack direction="row">
+        <Stack direction="row" spacing={2}>
           <TextField
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
+            size="small"
           />
           <Button
             onClick={handleClick}
             type="submit"
+            disabled={loading}
           >
             GET
           </Button>
