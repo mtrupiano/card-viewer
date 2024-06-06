@@ -88,7 +88,7 @@ export default function CardSearchAndSelectionPane({
       </form>
 
       {cardList && cardList.length > 0 && (
-        <List>
+        <List style={{ overflowY: "scroll" }}>
           {cardList.map((card, index) => (
             <ListItemButton
               key={index}
