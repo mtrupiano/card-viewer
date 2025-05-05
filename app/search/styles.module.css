@@ -3,3 +3,12 @@
   display: flex;
   justify-content: center;
 }
+
+.card {
+  transition: transform .2s;
+  border-radius: 6px;
+}
+
+.card:hover {
+  transform: scale(1.5);
+}

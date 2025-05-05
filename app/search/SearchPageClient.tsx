@@ -1,12 +1,16 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchField from "../components/SearchField";
+import { ScryfallList } from "@scryfall/api-types";
+import CardGrid from "./CardGrid";
 
 export default function SearchPageClient({
   initialSearchText,
+  cardList,
 }: {
-  initialSearchText: string,
+  initialSearchText: string | string[] | undefined;
+  cardList: ScryfallList.Cards;
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -30,10 +34,14 @@ export default function SearchPageClient({
   };
 
   return (
-    <SearchField 
-      loading={loading}
-      handleSearch={handleSearch}
-      initialSearchText={initialSearchText}
-    />
+    <>
+      <SearchField
+        loading={loading}
+        handleSearch={handleSearch}
+        initialSearchText={initialSearchText}
+      />
+
+      <CardGrid cardList={cardList} />
+    </>
   );
-};
+}

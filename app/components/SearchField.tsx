@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  Stack,
-  TextField,
-  Button,
-  InputBase,
-  Box,
-  ButtonBase,
-  styled,
-} from "@mui/material";
-
+import { Stack, InputBase, Box, ButtonBase, styled } from "@mui/material";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -17,12 +8,12 @@ const StyledBox = styled(Box)({
   padding: "4px 8px",
   borderLeft: "1px solid #D9D9D9",
   borderRight: "1px solid #D9D9D9",
-  '&:has(.Mui-focused)': {
+  "&:has(.Mui-focused)": {
     borderLeft: "2px solid #D9D9D9",
     borderRight: "2px solid #D9D9D9",
   },
-  '&:hover': {
-    backgroundColor: "#f0f0f0"
+  "&:hover": {
+    backgroundColor: "#f0f0f0",
   },
 });
 
@@ -40,35 +31,32 @@ export default function SearchField({
   handleSearch,
   loading,
 }: {
-  initialSearchText: string,
-  handleSearch: () => void,
-  loading: boolean,
+  initialSearchText: string;
+  handleSearch: (searchText: string) => void;
+  loading: boolean;
 }) {
-
   const [searchText, setSearchText] = useState(initialSearchText || "");
-  const handleSubmit = (event: HTMLFormElement) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     handleSearch(searchText);
   };
 
   return (
     <Stack direction="row" spacing={2}>
       <StyledBox>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={() => handleSearch(searchText)}>
           <InputBase
             value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={(e) => setSearchText(e.target.value)}
             inputProps={{
               style: {
-                padding: "0px"
-              }
+                padding: "0px",
+              },
             }}
           />
           <StyledButtonBase
             onClick={handleSubmit}
             type="submit"
             disabled={loading || searchText.trim().length === 0}
-            variant="contained"
           >
             Go
           </StyledButtonBase>
@@ -76,4 +64,4 @@ export default function SearchField({
       </StyledBox>
     </Stack>
   );
-};
+}
