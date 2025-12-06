@@ -13,22 +13,21 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.15",
     "@react-three/drei": "^10.7.6",
-    "@react-three/fiber": "^9.4.0",
+    "@react-three/fiber": "^9.4.2",
     "@scryfall/api-types": "^1.0.0-alpha.4",
     "@types/three": "^0.164.0",
-    "axios": "^1.12.0",
-    "next": "^16.0.1",
-    "react": "^19.2.0",
-    "react-dom": "^18",
-    "react-three-fiber": "^6.0.13",
-    "three": "^0.164.1"
+    "axios": "^1.13.2",
+    "next": "^16.0.7",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "three": "^0.181.2"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "^16.0.1",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.0.7",
     "typescript": "^5"
   }
 }
